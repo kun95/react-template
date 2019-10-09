@@ -1,68 +1,48 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1.删除掉由create-react-app默认生成的js css等
 
-## Available Scripts
+2.创建文件夹
+    - api 访问api接口
+    - assets 资源
+    - components UI组件
+    - containers 容器组件 跟redux相关
+    - redux redux相关
+    - utils 工具类
 
-In the project directory, you can run:
+3.设置 `index.html` 的 `meta` 信息
+```<meta  name="viewport"  content="width=device-width,  initial-scale=1,  maximum-scale=1,  minimum-scale=1,  user-scalable=no"  />```
 
-### `yarn start`
+4.解决 点击延迟的问题 在 `index.html` 中
+```
+<script>
+        if ('addEventListener' in document) {
+            document.addEventListener('DOMContentLoaded', function () {
+                FastClick.attach(document.body);
+            }, false);
+        }
+        if (!window.Promise) {
+            document.writeln('<script src="https://as.alipayobjects.com/g/component/es6-promise/3.2.2/es6-promise.min.js" ' + '>' + '<' + '/' + 'script>');
+        }
+</script>
+```
+5.按需加载
+`npm install --save-dev babel-plugin-import react-app-rewired`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+6.自定义配置 `config-overrides.js`
+```javascript 1.8
+const  {injectBabelPlugin}  =  require('react-app-rewired');
+module.exports  =  function  override(config,  env)  {
+config  =  injectBabelPlugin(['import',  {libraryName:  'antd-mobile',  style:  'css'}], config);
+return  config;
+}
+```
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+7.修改 `package.json`
+```javascript 1.8
+  "scripts":  {
+    "start":  "react-app-rewired  start",
+    "build":  "react-app-rewired  build",
+    "test":  "react-app-rewired  test  --env=jsdom",
+    "eject":  "react-scripts  eject"
+  },
+```
 
-### `yarn test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
